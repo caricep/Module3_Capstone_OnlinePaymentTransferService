@@ -1,5 +1,6 @@
 package com.techelevator.tenmo;
 
+import com.techelevator.tenmo.api.ApiAccountDAO;
 import com.techelevator.tenmo.dao.AccountDAO;
 import com.techelevator.tenmo.models.Account;
 import com.techelevator.tenmo.models.AuthenticatedUser;
@@ -38,6 +39,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
     public App(ConsoleService console, AuthenticationService authenticationService) {
 		this.console = console;
 		this.authenticationService = authenticationService;
+		accountDAO = new ApiAccountDAO(API_BASE_URL);
 	}
 
 	public void run() {

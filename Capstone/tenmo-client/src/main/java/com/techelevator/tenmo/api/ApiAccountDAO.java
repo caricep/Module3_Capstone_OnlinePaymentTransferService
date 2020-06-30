@@ -16,7 +16,7 @@ public class ApiAccountDAO implements AccountDAO {
 	
 	@Override
 	public double getAccountBalanceByUserId(Integer userId) {
-		return restTemplate.getForObject(baseUrl + "/users" + userId + "/accounts", double.class);
+		return restTemplate.getForObject(baseUrl + "/users/" + userId + "/accounts", double.class);
 	}
 
 }

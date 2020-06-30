@@ -17,7 +17,7 @@ public class TransferController {
 	private AccountDAO accountDAO;
 	
 	@RequestMapping(path = "users/{id}/accounts", method = RequestMethod.GET)
-	public double getAccountBalance(@PathVariable Long userId){
+	public double getAccountBalance(@PathVariable("id") Long userId){
 		return accountDAO.getAccountBalanceByUserId(userId);
 	}
 
