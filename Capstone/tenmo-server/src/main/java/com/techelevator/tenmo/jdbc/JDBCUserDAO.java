@@ -1,4 +1,4 @@
-package com.techelevator.tenmo.dao;
+package com.techelevator.tenmo.jdbc;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -11,15 +11,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.techelevator.tenmo.dao.UserDAO;
 import com.techelevator.tenmo.model.User;
 
 @Service
-public class UserSqlDAO implements UserDAO {
+public class JDBCUserDAO implements UserDAO {
 
     private static final double STARTING_BALANCE = 1000;
     private JdbcTemplate jdbcTemplate;
 
-    public UserSqlDAO(JdbcTemplate jdbcTemplate) {
+    public JDBCUserDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
