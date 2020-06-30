@@ -72,7 +72,8 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	}
 
 	private void viewCurrentBalance() {
-		accountDAO.getAccountBalanceByUserId(currentUser.getUser().getId());
+		System.out.println("Your current account balance is:");
+		System.out.println(accountDAO.getAccountBalanceByUserId(currentUser.getUser().getId()));
 		
 	}
 
