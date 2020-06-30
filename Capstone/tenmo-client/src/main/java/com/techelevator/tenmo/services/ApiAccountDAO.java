@@ -1,4 +1,4 @@
-package com.techelevator.tenmo.api;
+package com.techelevator.tenmo.services;
 
 import org.springframework.web.client.RestTemplate;
 
