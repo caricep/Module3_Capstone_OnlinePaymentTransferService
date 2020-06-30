@@ -1,11 +1,15 @@
 package com.techelevator.tenmo.services;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import com.techelevator.tenmo.dao.AccountDAO;
 
 public class ApiAccountDAO implements AccountDAO {
 
+	private static String authToken = "";
 	private String baseUrl;
 	private RestTemplate restTemplate;
 	
@@ -16,7 +20,11 @@ public class ApiAccountDAO implements AccountDAO {
 	
 	@Override
 	public double getAccountBalanceByUserId(Integer userId) {
-		return restTemplate.getForObject(baseUrl + "/users/" + userId + "/accounts", double.class);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(authToken);
+		HttpEntity entity = new HttpEntity<>(headers);
+		
+		return restTemplate.exchange(baseUrl + "/users/" + userId + "/accounts", HttpMethod.GET, entity, double.class).getBody();
 	}
 
 }

@@ -16,6 +16,7 @@ public class TransferController {
 	@Autowired
 	private AccountDAO accountDAO;
 	
+	@PreAuthorize("permitAll")
 	@RequestMapping(path = "users/{id}/accounts", method = RequestMethod.GET)
 	public double getAccountBalance(@PathVariable("id") Long userId){
 		return accountDAO.getAccountBalanceByUserId(userId);
