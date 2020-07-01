@@ -1,6 +1,11 @@
 package com.techelevator.tenmo;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import com.techelevator.tenmo.dao.AccountDAO;
+import com.techelevator.tenmo.models.Account;
 import com.techelevator.tenmo.models.AuthenticatedUser;
 import com.techelevator.tenmo.models.UserCredentials;
 import com.techelevator.tenmo.services.ApiAccountDAO;
@@ -92,7 +97,13 @@ public class App {
 
 	private void sendBucks() {
 		System.out.println("Please select what user you would like to send TE Bucks to.");
-		System.out.println(accountDAO.getListOfUserAccounts());
+		List<Account> accounts = new ArrayList<Account>();
+		accounts.addAll(accountDAO.getListOfUserAccounts());
+		System.out.println(String.format("User ID" + "   " + "UserName")); 
+		System.out.println("--------------------------------");
+		for (Account account : accounts) {
+		System.out.println(String.format(account.getUserId() + "   " + account.getUserName()));
+		}
 	}
 
 	private void requestBucks() {
