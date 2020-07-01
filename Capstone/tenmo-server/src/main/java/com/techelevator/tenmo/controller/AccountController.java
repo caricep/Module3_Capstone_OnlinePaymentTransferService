@@ -30,6 +30,10 @@ public class AccountController {
 	@PreAuthorize("permitAll")
 	@RequestMapping(path = "users", method = RequestMethod.GET)
 	public List<User> listOfUsers() {
-		return userDAO.findAll();
+		List<User> users = userDAO.findAll();
+		for (User user : users) {
+			users.add(user);
+		
+		}return users;
 	}
 }
