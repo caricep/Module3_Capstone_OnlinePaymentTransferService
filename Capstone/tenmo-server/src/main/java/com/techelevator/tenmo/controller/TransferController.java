@@ -22,7 +22,7 @@ public class TransferController {
 	private UserDAO userDAO;
 	
 	@PreAuthorize("permitAll")
-	@RequestMapping(path = "users/{id}/accounts", method = RequestMethod.GET)
+	@RequestMapping(path = "accounts/{id}", method = RequestMethod.GET)
 	public double getAccountBalance(@PathVariable("id") Long userId){
 		return accountDAO.getAccountBalanceByUserId(userId);
 	}
