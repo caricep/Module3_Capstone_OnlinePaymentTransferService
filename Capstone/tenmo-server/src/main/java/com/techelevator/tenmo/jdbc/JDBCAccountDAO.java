@@ -29,14 +29,13 @@ public class JDBCAccountDAO implements AccountDAO {
 	public List<Account> getListOfUserAccounts() {
 		List<Account> listOfUserAccounts = new ArrayList<Account>();
 		
-		String selectSql = "SELECT account_id, accounts.user_id, balance FROM accounts JOIN users ON accounts.user_id = users.user_id";
+		String selectSql = "SELECT account_id, accounts.user_id, users.username, balance FROM accounts JOIN users ON accounts.user_id = users.user_id";
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(selectSql);
 		
 		while (rows.next()) {
 			Account account = makeAccountFromRow(rows);
 			listOfUserAccounts.add(account);
 		}
-		
 		return listOfUserAccounts;
 	}
 	
@@ -45,6 +44,7 @@ public class JDBCAccountDAO implements AccountDAO {
 		
 		account.setAccountId(rows.getInt("account_id"));
 		account.setUserId(rows.getInt("user_id"));
+		account.setUserName(rows.getString("username"));
 		account.setAccountBalance(rows.getDouble("balance"));
 		
 		return account;

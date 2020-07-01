@@ -4,6 +4,7 @@ public class Account {
 	
 	private int accountId;
 	private int userId;
+	private String userName;
 	private double accountBalance;
 	
 	public int getAccountId() {
@@ -28,6 +29,14 @@ public class Account {
 	
 	public void setAccountBalance(double accountBalance) {
 		this.accountBalance = accountBalance;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	
