@@ -103,11 +103,16 @@ public class App {
 		accounts.addAll(accountDAO.getListOfUserAccounts());
 		
 		System.out.println("User ID" + "   " + "UserName");
-		System.out.println("-----------------");
+		System.out.println("-------------------");
 
 		for (Account account : accounts) {
 			System.out.println(account.getUserId() + "         " + account.getUserName());
 		}
+		
+		
+		// the user input will go in parentheses as the selected userID --> console.getUserInputInteger();
+		
+		//Add method to transfer $$
 	}
 
 	private void requestBucks() {
