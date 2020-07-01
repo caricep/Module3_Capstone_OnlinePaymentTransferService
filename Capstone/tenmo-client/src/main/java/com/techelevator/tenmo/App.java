@@ -96,13 +96,17 @@ public class App {
 	}
 
 	private void sendBucks() {
-		System.out.println("Please select what user you would like to send TE Bucks to.");
+		System.out.println("Please select the User ID of the user you would like to send TE Bucks to.");
+		System.out.println();
+		
 		List<Account> accounts = new ArrayList<Account>();
 		accounts.addAll(accountDAO.getListOfUserAccounts());
-		System.out.println(String.format("User ID" + "   " + "UserName")); 
-		System.out.println("--------------------------------");
+		
+		System.out.println("User ID" + "   " + "UserName");
+		System.out.println("-----------------");
+
 		for (Account account : accounts) {
-		System.out.println(String.format(account.getUserId() + "   " + account.getUserName()));
+			System.out.println(account.getUserId() + "         " + account.getUserName());
 		}
 	}
 
