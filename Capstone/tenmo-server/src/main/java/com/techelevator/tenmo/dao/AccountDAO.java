@@ -8,4 +8,5 @@ public interface AccountDAO {
 
 	public double getAccountBalanceByUserId(Long userId);
 	public List<Account> getListOfUserAccounts();
+	
 }

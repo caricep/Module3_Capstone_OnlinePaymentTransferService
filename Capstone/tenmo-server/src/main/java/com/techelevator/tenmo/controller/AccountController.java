@@ -31,4 +31,5 @@ public class AccountController {
 	public List<Account> listOfUserAccounts() {
 		return accountDAO.getListOfUserAccounts();	
 	}
+	
 }

@@ -7,7 +7,7 @@ import com.techelevator.tenmo.dao.AccountDAO;
 import com.techelevator.tenmo.models.Account;
 import com.techelevator.tenmo.models.AuthenticatedUser;
 import com.techelevator.tenmo.models.UserCredentials;
-import com.techelevator.tenmo.services.ApiAccountDAO;
+import com.techelevator.tenmo.services.ApiAccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.AuthenticationServiceException;
 import com.techelevator.view.ConsoleService;
@@ -46,7 +46,7 @@ public class App {
 	public App(ConsoleService console, AuthenticationService authenticationService) {
 		this.console = console;
 		this.authenticationService = authenticationService;
-		accountDAO = new ApiAccountDAO(API_BASE_URL);
+		accountDAO = new ApiAccountService(API_BASE_URL);
 	}
 
 	public void run() {

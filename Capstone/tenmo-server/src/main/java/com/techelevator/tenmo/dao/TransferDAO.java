@@ -1,7 +1,9 @@
 package com.techelevator.tenmo.dao;
 
+import com.techelevator.tenmo.model.Transfer;
+
 public interface TransferDAO {
 
-	public void makeTransfer(int accountFrom, int accountTo, double transferAmount);
+	public Transfer createTransfer();
 	
 }

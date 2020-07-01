@@ -11,13 +11,13 @@ import org.springframework.web.client.RestTemplate;
 import com.techelevator.tenmo.dao.AccountDAO;
 import com.techelevator.tenmo.models.Account;
 
-public class ApiAccountDAO implements AccountDAO {
+public class ApiAccountService implements AccountDAO {
 
 	private static String authToken = "";
 	private String baseUrl;
 	private RestTemplate restTemplate;
 	
-	public ApiAccountDAO(String baseUrl) {
+	public ApiAccountService(String baseUrl) {
 		this.baseUrl = baseUrl;
 		restTemplate = new RestTemplate();
 	}
