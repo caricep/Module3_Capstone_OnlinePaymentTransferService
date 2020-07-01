@@ -5,6 +5,8 @@ public class Transfer {
 	private int transferId;
 	private int transferTypeId;
 	private int transferStatusId;
+	private int userIdSender;
+	private int userIdRecipient;
 	private int accountFrom;
 	private int accountTo;
 	private double transferAmount;
@@ -55,6 +57,22 @@ public class Transfer {
 	
 	public void setTransferAmount(double transferAmount) {
 		this.transferAmount = transferAmount;
+	}
+
+	public int getUserIdSender() {
+		return userIdSender;
+	}
+
+	public void setUserIdSender(int userIdSender) {
+		this.userIdSender = userIdSender;
+	}
+
+	public int getUserIdRecipient() {
+		return userIdRecipient;
+	}
+
+	public void setUserIdRecipient(int userIdRecipient) {
+		this.userIdRecipient = userIdRecipient;
 	}
 	
 	

@@ -29,8 +29,6 @@ public class AccountController {
 	@PreAuthorize("permitAll")
 	@RequestMapping(path = "/accounts", method = RequestMethod.GET)
 	public List<Account> listOfUserAccounts() {
-		return accountDAO.getListOfUserAccounts();
-		
-		
+		return accountDAO.getListOfUserAccounts();			
 	}
 }
