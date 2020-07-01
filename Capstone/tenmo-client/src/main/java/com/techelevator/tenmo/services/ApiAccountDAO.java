@@ -28,7 +28,7 @@ public class ApiAccountDAO implements AccountDAO {
 		headers.setBearerAuth(authToken);
 		HttpEntity entity = new HttpEntity<>(headers);
 		
-		return restTemplate.exchange(baseUrl + "/accounts/" + userId, HttpMethod.GET, entity, double.class).getBody();
+		return restTemplate.exchange(baseUrl + "/users/" + userId + "/accounts", HttpMethod.GET, entity, double.class).getBody();
 	}
 
 	@Override

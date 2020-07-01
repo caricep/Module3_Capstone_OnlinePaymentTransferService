@@ -15,13 +15,14 @@ public class JDBCTransferDAO implements TransferDAO {
     }
 
 	@Override
-	public void makeTransfer(int userIdSender, int userIdRecipient, int accountFrom, int accountTo, double transferAmount) {
+	public void makeTransfer(int accountFrom, int accountTo, double transferAmount) {
 		String selectSql = "SELECT account_id, user_id, balance - ? FROM accounts WHERE account_id = ? AND balance > 0";
 		
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(selectSql, transferAmount, accountFrom);
 		while(rows.next()) {
 			Transfer transfer = new Transfer();
 			transfer.setAccountFrom(rows.getInt("account_from"));
+			transfer.setAccountTo(rows.getInt("account_to"));
 			transfer.setTransferAmount(rows.getDouble("amount"));
 		}
 		
@@ -29,4 +30,5 @@ public class JDBCTransferDAO implements TransferDAO {
 		jdbcTemplate.update(updateSql, transferAmount, accountTo);
 	}
 
+	
 }

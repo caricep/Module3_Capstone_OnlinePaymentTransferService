@@ -21,7 +21,7 @@ public class AccountController {
 	
 	
 	@PreAuthorize("permitAll")
-	@RequestMapping(path = "/accounts/{id}", method = RequestMethod.GET)
+	@RequestMapping(path = "/users/{id}/accounts", method = RequestMethod.GET)
 	public double getAccountBalance(@PathVariable("id") Long userId){
 		return accountDAO.getAccountBalanceByUserId(userId);
 	}
@@ -29,6 +29,6 @@ public class AccountController {
 	@PreAuthorize("permitAll")
 	@RequestMapping(path = "/accounts", method = RequestMethod.GET)
 	public List<Account> listOfUserAccounts() {
-		return accountDAO.getListOfUserAccounts();			
+		return accountDAO.getListOfUserAccounts();	
 	}
 }

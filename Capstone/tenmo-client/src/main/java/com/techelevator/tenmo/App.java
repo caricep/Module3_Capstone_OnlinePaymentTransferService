@@ -1,7 +1,6 @@
 package com.techelevator.tenmo;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.techelevator.tenmo.dao.AccountDAO;
@@ -37,6 +36,7 @@ public class App {
 	private AuthenticationService authenticationService;
 
 	private AccountDAO accountDAO;
+
 
 	public static void main(String[] args) {
 		App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL));
@@ -111,10 +111,8 @@ public class App {
 		}
 		
 		System.out.println();
-		System.out.print("Enter ID of user you are sending to (0 to cancel): ");
-		System.out.println();
-		
-		// the user input will go in parentheses as the selected userID --> console.getUserInputInteger();
+		console.getUserInputInteger("Enter ID of user you are sending to (0 to cancel): ");
+		System.out.println();	
 		
 		//Add method to transfer $$
 	}
