@@ -96,19 +96,23 @@ public class App {
 	}
 
 	private void sendBucks() {
-		System.out.println("Please select the User ID of the user you would like to send TE Bucks to.");
-		System.out.println();
+		System.out.println("-----------------------------------------------------");
+		
 		
 		List<Account> accounts = new ArrayList<Account>();
 		accounts.addAll(accountDAO.getListOfUserAccounts());
 		
-		System.out.println("User ID" + "   " + "UserName");
-		System.out.println("-------------------");
+		System.out.println("Users");
+		System.out.println("ID" + "         " + "UserName");
+		System.out.println("-----------------------------------------------------");
 
 		for (Account account : accounts) {
-			System.out.println(account.getUserId() + "         " + account.getUserName());
+			System.out.println(account.getUserId() + "          " + account.getUserName());
 		}
 		
+		System.out.println();
+		System.out.print("Enter ID of user you are sending to (0 to cancel): ");
+		System.out.println();
 		
 		// the user input will go in parentheses as the selected userID --> console.getUserInputInteger();
 		
