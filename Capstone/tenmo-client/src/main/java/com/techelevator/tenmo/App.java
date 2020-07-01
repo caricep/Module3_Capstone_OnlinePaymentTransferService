@@ -99,6 +99,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		System.out.println("Please select what user you would like to send TE Bucks to.");
 		List<User> users = userDAO.findAll();
 		for (User user : users) {
+			users.add(user);
 		System.out.println(user.getId() + user.getUsername());
 		}
 	}
