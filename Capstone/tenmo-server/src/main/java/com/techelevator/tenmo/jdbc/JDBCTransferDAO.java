@@ -23,7 +23,7 @@ public class JDBCTransferDAO implements TransferDAO {
 	public List<Transfer> getListOfTransfers() {
 		List<Transfer> listOfTransfers = new ArrayList<Transfer>();
 
-		String selectSql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount FROM transfers";
+		String selectSql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, CAST(amount as decimal) FROM transfers";
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(selectSql);
 
 		while (rows.next()) {
@@ -36,7 +36,7 @@ public class JDBCTransferDAO implements TransferDAO {
 
 	@Override
 	public Transfer createTransfer(Transfer transfer) {
-		String insertTransferSql = "INSERT INTO transfers (transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount) "
+		String insertTransferSql = "INSERT INTO transfers (transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, CAST(amount as decimal) "
 				+ "VALUES (DEFAULT, 2, 2, ?, ?, ?) RETURNING transfer_id";
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(insertTransferSql, transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getTransferAmount());
 

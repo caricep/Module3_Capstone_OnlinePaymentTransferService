@@ -95,11 +95,11 @@ public class App {
 		transfers.addAll(transferDAO.getListOfTransfers());
 		
 		System.out.println("Transfers");
-		System.out.println("ID" + "         " + "From/To" + "     " + "Amount");
+		System.out.println(String.format("%-10s%-10s%s", "ID", "From/To", "Amount"));
 		System.out.println("-----------------------------------------------------");
 
 		for (Transfer transfer : transfers) {
-			System.out.println(transfer.getTransferId() + "          " + transferTypeConversion(transfer.getTransferTypeId()) + "           $" + transfer.getTransferAmount());
+			System.out.printf("%-10s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), "$" + transfer.getTransferAmount() + "\n");
 		}
 
 	}
@@ -153,18 +153,18 @@ public class App {
 		Transfer transfer = new Transfer();
 		
 		int userIdRecipient = console.getUserIdChoice();
-		userIdRecipient = transfer.getUserIdRecipient();
+		transfer.setUserIdRecipient(userIdRecipient);
 		int userIdSender = currentUser.getUser().getId();
-		userIdSender = transfer.getUserIdSender();
+		transfer.setUserIdSender(userIdSender);
 		
 		int accountFrom = accountDAO.getAccountIdByUserId(userIdSender);
-		accountFrom = transfer.getAccountFrom();
+		transfer.setAccountFrom(accountFrom);
 		int accountTo = accountDAO.getAccountIdByUserId(userIdRecipient);
-		accountTo = transfer.getAccountTo();
+		transfer.setAccountTo(accountTo);
 		
 		System.out.println("Enter amount: ");
 		double transferAmount = console.getAmountChoice();
-		transferAmount = transfer.getTransferAmount();
+		transfer.setTransferAmount(transferAmount);
 		
 		transferDAO.createTransfer(transfer);
 		System.out.println();
