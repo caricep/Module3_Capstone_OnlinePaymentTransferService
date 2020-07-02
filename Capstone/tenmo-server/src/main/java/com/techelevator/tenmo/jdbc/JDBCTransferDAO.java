@@ -5,7 +5,6 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import com.techelevator.tenmo.dao.TransferDAO;
-import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.Transfer;
 
 @Component
@@ -31,8 +30,10 @@ public class JDBCTransferDAO implements TransferDAO {
 		Transfer transfer = new Transfer();
 		while(selectedRows.next()) {
 			transfer.setTransferId(transferId);
-			transfer.setTransferTypeId(selectedRows.getInt("transfer_type_id"));
-			transfer.setTransferStatusId(selectedRows.getInt("transfer_status_id"));
+			int transferTypeIdInt = selectedRows.getInt("transfer_type_id");
+			transfer.setTransferTypeId(transferTypeConversion(transferTypeIdInt));
+			int transferStatusId = selectedRows.getInt("transfer_status_id");
+			transfer.setTransferStatusId(transferStatusConversion(transferStatusId));
 			transfer.setAccountFrom(selectedRows.getInt("account_from"));
 			transfer.setAccountTo(selectedRows.getInt("account_to"));
 			transfer.setTransferAmount(selectedRows.getDouble("amount"));
@@ -41,5 +42,29 @@ public class JDBCTransferDAO implements TransferDAO {
 		return transfer;
 	}
 	
+	private String transferTypeConversion(int transferTypeId) {
+		
+		if (transferTypeId == 1) {
+			return "Request";
+		} 
+		if (transferTypeId == 2) {
+			return "Send";
+		} 
+		return "";
+	}
+	
+	private String transferStatusConversion(int transferStatusId) {
+		
+		if (transferStatusId == 1) {
+			return "Pending";
+		}
+		if (transferStatusId == 2) {
+			return "Approved";
+		}
+		if (transferStatusId == 3) {
+			return "Rejected";
+		}
+		return "";
+	}
 
 }
