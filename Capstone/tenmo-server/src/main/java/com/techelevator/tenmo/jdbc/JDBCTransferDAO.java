@@ -15,83 +15,64 @@ public class JDBCTransferDAO implements TransferDAO {
 
 	private JdbcTemplate jdbcTemplate;
 
-    public JDBCTransferDAO(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-	
-    @Override
+	public JDBCTransferDAO(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	@Override
 	public List<Transfer> getListOfTransfers() {
 		List<Transfer> listOfTransfers = new ArrayList<Transfer>();
-		
+
 		String selectSql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount FROM transfers";
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(selectSql);
-		
+
 		while (rows.next()) {
 			Transfer transfer = makeTransferFromRow(rows);
 			listOfTransfers.add(transfer);
 		}
-		
+
 		return listOfTransfers;
 	}
-    
+
 	@Override
 	public Transfer createTransfer(Transfer transfer) {
 		String insertTransferSql = "INSERT INTO transfers (transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount) "
 				+ "VALUES (DEFAULT, 2, 2, ?, ?, ?) RETURNING transfer_id";
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(insertTransferSql, transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getTransferAmount());
 
-			rows.next();
-			int transferId = rows.getInt("transfer_id");
-			transfer.setTransferId(transferId);
-//			transfer.setTransferTypeId(rows.getInt("transfer_type_id"));
-//			transfer.setTransferStatusId(rows.getInt("transfer_status_id"));
-//			transfer.setAccountFrom(rows.getInt("account_from"));
-//			transfer.setAccountTo(rows.getInt("account_to"));
-//			transfer.setTransferAmount(rows.getDouble("amount"));
-//		}
-		
-//		String selectSql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount "
-//				+ "FROM transfers JOIN accounts ON accounts.account_id = transfers.account_from JOIN users ON users.user_id = accounts.user_id";
-//		SqlRowSet selectedRows = jdbcTemplate.queryForRowSet(selectSql, transferId);
-//		Transfer newTransfer = new Transfer();
-//		while(selectedRows.next()) {
-//			newTransfer.setTransferId(transferId);
-//			newTransfer.setTransferTypeId(selectedRows.getInt("transfer_type_id"));
-//			newTransfer.setTransferStatusId(selectedRows.getInt("transfer_status_id"));
-//			newTransfer.setAccountFrom(selectedRows.getInt("account_from"));
-//			newTransfer.setAccountTo(selectedRows.getInt("account_to"));
-//			newTransfer.setTransferAmount(selectedRows.getDouble("amount"));
-			
-		
+		rows.next();
+		int transferId = rows.getInt("transfer_id");
+		transfer.setTransferId(transferId);
+
 		return transfer;
 	}
-	
+
 	private Transfer makeTransferFromRow(SqlRowSet rows) {
 		Transfer transfer = new Transfer();
-		
+
 		transfer.setTransferId(rows.getInt("transfer_id"));
 		transfer.setTransferTypeId(rows.getInt("transfer_type_id"));
 		transfer.setTransferStatusId(rows.getInt("transfer_status_id"));
 		transfer.setAccountFrom(rows.getInt("account_from"));
 		transfer.setAccountTo(rows.getInt("account_to"));
 		transfer.setTransferAmount(rows.getDouble("amount"));
-		
+
 		return transfer;
 	}
-	
+
 	private String transferTypeConversion(int transferTypeId) {
-		
+
 		if (transferTypeId == 1) {
 			return "Request";
-		} 
+		}
 		if (transferTypeId == 2) {
 			return "Send";
-		} 
+		}
 		return "";
 	}
-	
+
 	private String transferStatusConversion(int transferStatusId) {
-		
+
 		if (transferStatusId == 1) {
 			return "Pending";
 		}
