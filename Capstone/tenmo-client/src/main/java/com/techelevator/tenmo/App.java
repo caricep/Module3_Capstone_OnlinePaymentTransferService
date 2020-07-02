@@ -91,10 +91,43 @@ public class App {
 	}
 
 	private void viewTransferHistory() {
-		// TODO Auto-generated method stub
+		List<Transfer> transfers = new ArrayList<Transfer>();
+		transfers.addAll(transferDAO.getListOfTransfers());
+		
+		System.out.println("Transfers");
+		System.out.println("ID" + "         " + "From/To" + "     " + "Amount");
+		System.out.println("-----------------------------------------------------");
+
+		for (Transfer transfer : transfers) {
+			System.out.println(transfer.getTransferId() + "          " + transferTypeConversion(transfer.getTransferTypeId()) + "           $" + transfer.getTransferAmount());
+		}
 
 	}
 
+	private String transferTypeConversion(int transferTypeId) {
+
+		if (transferTypeId == 1) {
+			return "From";
+		}
+		if (transferTypeId == 2) {
+			return "To";
+		}
+		return "";
+	}
+
+	private String transferStatusConversion(int transferStatusId) {
+
+		if (transferStatusId == 1) {
+			return "Pending";
+		}
+		if (transferStatusId == 2) {
+			return "Approved";
+		}
+		if (transferStatusId == 3) {
+			return "Rejected";
+		}
+		return "";
+	}
 	private void viewPendingRequests() {
 		// TODO Auto-generated method stub
 
