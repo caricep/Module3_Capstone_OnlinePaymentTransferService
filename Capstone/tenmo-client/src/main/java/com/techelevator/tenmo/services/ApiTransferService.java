@@ -28,7 +28,7 @@ public class ApiTransferService implements TransferDAO {
 		headers.setBearerAuth(authToken);
 		HttpEntity entity = new HttpEntity<>(headers);
 		
-		return restTemplate.exchange(baseUrl + "/transfers", HttpMethod.GET, entity, Transfer.class).getBody();
+		return restTemplate.exchange(baseUrl + "/transfers", HttpMethod.POST, entity, Transfer.class).getBody();
 	}
 		
 
