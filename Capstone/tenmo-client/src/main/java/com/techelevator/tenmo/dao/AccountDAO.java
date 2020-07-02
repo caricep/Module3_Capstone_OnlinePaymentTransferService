@@ -6,6 +6,7 @@ import com.techelevator.tenmo.models.Account;
 
 public interface AccountDAO {
 
-	public double getAccountBalanceByUserId(Integer userId);
+	public double getAccountBalanceByUserId(int userId);
+	public int getAccountIdByUserId(int userIdSender);
 	public List<Account> getListOfUserAccounts();
 }

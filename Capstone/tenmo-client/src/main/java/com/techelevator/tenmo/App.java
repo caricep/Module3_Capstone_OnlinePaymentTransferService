@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.techelevator.tenmo.dao.AccountDAO;
+import com.techelevator.tenmo.dao.TransferDAO;
 import com.techelevator.tenmo.models.Account;
 import com.techelevator.tenmo.models.AuthenticatedUser;
+import com.techelevator.tenmo.models.Transfer;
 import com.techelevator.tenmo.models.UserCredentials;
 import com.techelevator.tenmo.services.ApiAccountService;
+import com.techelevator.tenmo.services.ApiTransferService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.AuthenticationServiceException;
 import com.techelevator.view.ConsoleService;
@@ -36,6 +39,7 @@ public class App {
 	private AuthenticationService authenticationService;
 
 	private AccountDAO accountDAO;
+	private TransferDAO transferDAO;
 
 
 	public static void main(String[] args) {
@@ -47,6 +51,7 @@ public class App {
 		this.console = console;
 		this.authenticationService = authenticationService;
 		accountDAO = new ApiAccountService(API_BASE_URL);
+		transferDAO = new ApiTransferService(API_BASE_URL);
 	}
 
 	public void run() {
@@ -97,8 +102,7 @@ public class App {
 
 	private void sendBucks() {
 		System.out.println("-----------------------------------------------------");
-		
-		
+				
 		List<Account> accounts = new ArrayList<Account>();
 		accounts.addAll(accountDAO.getListOfUserAccounts());
 		
@@ -111,10 +115,25 @@ public class App {
 		}
 		
 		System.out.println();
-		console.getUserInputInteger("Enter ID of user you are sending to (0 to cancel): ");
-		System.out.println();	
 		
-		//Call method to transfer $$
+		Transfer transfer = new Transfer();
+		transferDAO.createTransfer(transfer);
+		int userIdRecipient = console.getUserInputInteger("Enter ID of user you are sending to (0 to cancel): ");
+		
+		System.out.println();
+		
+		int userIdSender = currentUser.getUser().getId();
+		userIdSender = transfer.getUserIdSender();
+		userIdRecipient = transfer.getUserIdRecipient();
+		
+		int accountFrom = accountDAO.getAccountIdByUserId(userIdSender);
+		accountFrom = transfer.getAccountFrom();
+		int accountTo = accountDAO.getAccountIdByUserId(userIdRecipient);
+		accountTo = transfer.getAccountTo();
+		double transferAmount = console.getUserInputDouble("Enter amount: ");
+		transferAmount = transfer.getTransferAmount();
+		System.out.println();
+		
 	}
 
 	private void requestBucks() {

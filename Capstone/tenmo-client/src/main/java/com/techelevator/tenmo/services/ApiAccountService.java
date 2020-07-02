@@ -22,15 +22,25 @@ public class ApiAccountService implements AccountDAO {
 		restTemplate = new RestTemplate();
 	}
 	
+	
 	@Override
-	public double getAccountBalanceByUserId(Integer userId) {
+	public double getAccountBalanceByUserId(int userId) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth(authToken);
 		HttpEntity entity = new HttpEntity<>(headers);
 		
 		return restTemplate.exchange(baseUrl + "/users/" + userId + "/accounts", HttpMethod.GET, entity, double.class).getBody();
 	}
-
+	
+	@Override
+	public int getAccountIdByUserId(int userId) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(authToken);
+		HttpEntity entity = new HttpEntity<>(headers);
+		
+		return restTemplate.exchange(baseUrl + "/accounts" + userId, HttpMethod.GET, entity, int.class).getBody();
+	}
+	
 	@Override
 	public List<Account> getListOfUserAccounts() {
 		HttpHeaders headers = new HttpHeaders();
@@ -41,5 +51,10 @@ public class ApiAccountService implements AccountDAO {
 		List<Account> listOfUserAccounts = Arrays.asList(userAccountArray);
 		return listOfUserAccounts;
 	}
+
+	
+
+
+	
 	
 }

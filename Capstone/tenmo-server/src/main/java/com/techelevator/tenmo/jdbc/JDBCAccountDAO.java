@@ -26,6 +26,12 @@ public class JDBCAccountDAO implements AccountDAO {
 	}
 
 	@Override
+	public int getAccountIdByUserId(Long userId) {
+		int accountId = jdbcTemplate.queryForObject("SELECT account_id FROM accounts WHERE user_id = ?", int.class, userId);
+		return accountId;
+	}
+	
+	@Override
 	public List<Account> getListOfUserAccounts() {
 		List<Account> listOfUserAccounts = new ArrayList<Account>();
 		
@@ -49,6 +55,5 @@ public class JDBCAccountDAO implements AccountDAO {
 		
 		return account;
 	}
-
 
 }
