@@ -115,23 +115,25 @@ public class App {
 		}
 		
 		System.out.println();
+		System.out.println("Enter ID of user you are sending to (0 to cancel): ");
 		
 		Transfer transfer = new Transfer();
-		transferDAO.createTransfer(transfer);
-		int userIdRecipient = console.getUserInputInteger("Enter ID of user you are sending to (0 to cancel): ");
 		
-		System.out.println();
-		
+		int userIdRecipient = console.getUserIdChoice();
+		userIdRecipient = transfer.getUserIdRecipient();
 		int userIdSender = currentUser.getUser().getId();
 		userIdSender = transfer.getUserIdSender();
-		userIdRecipient = transfer.getUserIdRecipient();
 		
 		int accountFrom = accountDAO.getAccountIdByUserId(userIdSender);
 		accountFrom = transfer.getAccountFrom();
 		int accountTo = accountDAO.getAccountIdByUserId(userIdRecipient);
 		accountTo = transfer.getAccountTo();
-		double transferAmount = console.getUserInputDouble("Enter amount: ");
+		
+		System.out.println("Enter amount: ");
+		double transferAmount = console.getAmountChoice();
 		transferAmount = transfer.getTransferAmount();
+		
+		transferDAO.createTransfer(transfer);
 		System.out.println();
 		
 	}

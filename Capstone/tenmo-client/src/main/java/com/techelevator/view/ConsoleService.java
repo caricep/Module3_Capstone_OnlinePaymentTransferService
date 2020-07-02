@@ -74,18 +74,16 @@ public class ConsoleService {
 		return result;
 	}
 	
-	public Double getUserInputDouble(String prompt) {
-		Double result = null;
-		do {
-			out.print(prompt+": ");
-			out.flush();
-			String userInput = in.nextLine();
-			try {
-				result = Double.parseDouble(userInput);
-			} catch(NumberFormatException e) {
-				out.println("\n*** " + userInput + " is not valid ***\n");
-			}
-		} while(result == null);
-		return result;
+	
+	public int getUserIdChoice() {
+		String userIdChoiceString = in.nextLine();
+		int userIdChoice = Integer.parseInt(userIdChoiceString);
+		return userIdChoice;
+	}
+	
+	public double getAmountChoice() {
+		String amountChoiceString = in.nextLine();
+		double amountChoice = Double.parseDouble(amountChoiceString);
+		return amountChoice;
 	}
 }
