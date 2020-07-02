@@ -114,7 +114,7 @@ public class App {
 		console.getUserInputInteger("Enter ID of user you are sending to (0 to cancel): ");
 		System.out.println();	
 		
-		//Add method to transfer $$
+		//Call method to transfer $$
 	}
 
 	private void requestBucks() {
