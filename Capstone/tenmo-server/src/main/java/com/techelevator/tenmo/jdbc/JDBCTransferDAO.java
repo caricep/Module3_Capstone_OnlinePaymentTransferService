@@ -48,10 +48,8 @@ public class JDBCTransferDAO implements TransferDAO {
 		Transfer transfer = new Transfer();
 		while(selectedRows.next()) {
 			transfer.setTransferId(transferId);
-			int transferTypeIdInt = selectedRows.getInt("transfer_type_id");
-			transfer.setTransferTypeId(transferTypeConversion(transferTypeIdInt));
-			int transferStatusId = selectedRows.getInt("transfer_status_id");
-			transfer.setTransferStatusId(transferStatusConversion(transferStatusId));
+			transfer.setTransferTypeId(selectedRows.getInt("transfer_type_id"));
+			transfer.setTransferStatusId(selectedRows.getInt("transfer_status_id"));
 			transfer.setAccountFrom(selectedRows.getInt("account_from"));
 			transfer.setAccountTo(selectedRows.getInt("account_to"));
 			transfer.setTransferAmount(selectedRows.getDouble("amount"));
@@ -64,10 +62,8 @@ public class JDBCTransferDAO implements TransferDAO {
 		Transfer transfer = new Transfer();
 		
 		transfer.setTransferId(rows.getInt("transfer_id"));
-		int transferTypeIdInt = rows.getInt("transfer_type_id");
-		transfer.setTransferTypeId(transferTypeConversion(transferTypeIdInt));
-		int transferStatusId = rows.getInt("transfer_status_id");
-		transfer.setTransferStatusId(transferStatusConversion(transferStatusId));
+		transfer.setTransferTypeId(rows.getInt("transfer_type_id"));
+		transfer.setTransferStatusId(rows.getInt("transfer_status_id"));
 		transfer.setAccountFrom(rows.getInt("account_from"));
 		transfer.setAccountTo(rows.getInt("account_to"));
 		transfer.setTransferAmount(rows.getDouble("amount"));
