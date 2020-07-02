@@ -25,9 +25,9 @@ public class TransferController {
 		return transferDAO.getListOfTransfers();
 	}
 	
-	//@PreAuthorize("permitAll")
+	
 	@RequestMapping(path = "/transfers", method = RequestMethod.POST)
-	public Transfer createTransfer(@RequestParam int accountFrom, int accountTo, double transferAmount) {
-		return transferDAO.createTransfer(accountFrom, accountTo, transferAmount);
+	public Transfer createTransfer(@RequestBody Transfer transfer) {
+		return transferDAO.createTransfer(transfer);
 	}
 }

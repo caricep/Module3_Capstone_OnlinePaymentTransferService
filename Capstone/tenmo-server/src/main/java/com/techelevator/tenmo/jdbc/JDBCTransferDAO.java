@@ -35,26 +35,34 @@ public class JDBCTransferDAO implements TransferDAO {
 	}
     
 	@Override
-	public Transfer createTransfer(int accountFrom, int accountTo, double transferAmount) {
+	public Transfer createTransfer(Transfer transfer) {
 		String insertTransferSql = "INSERT INTO transfers (transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount) "
 				+ "VALUES (DEFAULT, 2, 2, ?, ?, ?) RETURNING transfer_id";
-		SqlRowSet rows = jdbcTemplate.queryForRowSet(insertTransferSql, accountFrom, accountTo, transferAmount);
-		rows.next();
-		int transferId = rows.getInt("transfer_id");
-		
-		String selectSql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount "
-				+ "FROM transfers JOIN accounts ON accounts.account_id = transfers.account_from JOIN users ON users.user_id = accounts.user_id";
-		SqlRowSet selectedRows = jdbcTemplate.queryForRowSet(selectSql, transferId);
-		Transfer transfer = new Transfer();
-		while(selectedRows.next()) {
+		SqlRowSet rows = jdbcTemplate.queryForRowSet(insertTransferSql, transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getTransferAmount());
+
+			rows.next();
+			int transferId = rows.getInt("transfer_id");
 			transfer.setTransferId(transferId);
-			transfer.setTransferTypeId(selectedRows.getInt("transfer_type_id"));
-			transfer.setTransferStatusId(selectedRows.getInt("transfer_status_id"));
-			transfer.setAccountFrom(selectedRows.getInt("account_from"));
-			transfer.setAccountTo(selectedRows.getInt("account_to"));
-			transfer.setTransferAmount(selectedRows.getDouble("amount"));
+//			transfer.setTransferTypeId(rows.getInt("transfer_type_id"));
+//			transfer.setTransferStatusId(rows.getInt("transfer_status_id"));
+//			transfer.setAccountFrom(rows.getInt("account_from"));
+//			transfer.setAccountTo(rows.getInt("account_to"));
+//			transfer.setTransferAmount(rows.getDouble("amount"));
+//		}
+		
+//		String selectSql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount "
+//				+ "FROM transfers JOIN accounts ON accounts.account_id = transfers.account_from JOIN users ON users.user_id = accounts.user_id";
+//		SqlRowSet selectedRows = jdbcTemplate.queryForRowSet(selectSql, transferId);
+//		Transfer newTransfer = new Transfer();
+//		while(selectedRows.next()) {
+//			newTransfer.setTransferId(transferId);
+//			newTransfer.setTransferTypeId(selectedRows.getInt("transfer_type_id"));
+//			newTransfer.setTransferStatusId(selectedRows.getInt("transfer_status_id"));
+//			newTransfer.setAccountFrom(selectedRows.getInt("account_from"));
+//			newTransfer.setAccountTo(selectedRows.getInt("account_to"));
+//			newTransfer.setTransferAmount(selectedRows.getDouble("amount"));
 			
-		}
+		
 		return transfer;
 	}
 	
