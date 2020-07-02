@@ -1,5 +1,8 @@
 package com.techelevator.tenmo.jdbc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -16,6 +19,21 @@ public class JDBCTransferDAO implements TransferDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 	
+    @Override
+	public List<Transfer> getListOfTransfers() {
+		List<Transfer> listOfTransfers = new ArrayList<Transfer>();
+		
+		String selectSql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount FROM transfers";
+		SqlRowSet rows = jdbcTemplate.queryForRowSet(selectSql);
+		
+		while (rows.next()) {
+			Transfer transfer = makeTransferFromRow(rows);
+			listOfTransfers.add(transfer);
+		}
+		
+		return listOfTransfers;
+	}
+    
 	@Override
 	public Transfer createTransfer(int accountFrom, int accountTo, double transferAmount) {
 		String insertTransferSql = "INSERT INTO transfers (transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount) "
@@ -39,6 +57,21 @@ public class JDBCTransferDAO implements TransferDAO {
 			transfer.setTransferAmount(selectedRows.getDouble("amount"));
 			
 		}
+		return transfer;
+	}
+	
+	private Transfer makeTransferFromRow(SqlRowSet rows) {
+		Transfer transfer = new Transfer();
+		
+		transfer.setTransferId(rows.getInt("transfer_id"));
+		int transferTypeIdInt = rows.getInt("transfer_type_id");
+		transfer.setTransferTypeId(transferTypeConversion(transferTypeIdInt));
+		int transferStatusId = rows.getInt("transfer_status_id");
+		transfer.setTransferStatusId(transferStatusConversion(transferStatusId));
+		transfer.setAccountFrom(rows.getInt("account_from"));
+		transfer.setAccountTo(rows.getInt("account_to"));
+		transfer.setTransferAmount(rows.getDouble("amount"));
+		
 		return transfer;
 	}
 	
