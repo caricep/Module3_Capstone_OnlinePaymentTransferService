@@ -87,7 +87,7 @@ public class App {
 
 	private void viewCurrentBalance() {
 		System.out.println("Your current account balance is:" + " $"
-				+ accountDAO.getAccountBalanceByUserId(currentUser.getUser().getId()));
+				+ String.format("%.2f", accountDAO.getAccountBalanceByUserId(currentUser.getUser().getId())));
 	}
 
 	private void viewTransferHistory() {
@@ -99,7 +99,7 @@ public class App {
 		System.out.println("-----------------------------------------------------");
 
 		for (Transfer transfer : transfers) {
-			System.out.printf("%-10s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), "$" + transfer.getTransferAmount() + "\n");
+			System.out.printf("%-10s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), "$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
 		}
 
 	}
