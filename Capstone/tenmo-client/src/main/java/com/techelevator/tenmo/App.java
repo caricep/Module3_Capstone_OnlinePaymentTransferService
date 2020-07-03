@@ -90,16 +90,53 @@ public class App {
 				+ String.format("%.2f", accountDAO.getAccountBalanceByUserId(currentUser.getUser().getId())));
 	}
 
+	
 	private void viewTransferHistory() {
 		List<Transfer> transfers = new ArrayList<Transfer>();
 		transfers.addAll(transferDAO.getListOfTransfersByAccountId(currentUser.getUser().getId()));
 		
+		System.out.println("-----------------------------------------------------");
 		System.out.println("Transfers");
 		System.out.println(String.format("%-10s%-14s%s", "ID", "From/To", "Amount"));
 		System.out.println("-----------------------------------------------------");
 
 		for (Transfer transfer : transfers) {
 			System.out.printf("%-10s%-3s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), accountIdToUsernameConversion(transfer.getAccountTo()), "$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
+		}
+		viewTransferHistoryDetails();
+	}
+	
+	
+	private void viewTransferHistoryDetails() {
+		System.out.println();
+		System.out.print("Please enter transfer ID to view details (0 to cancel): ");
+		
+		if (console.getTransferIdChoice() == 0) {
+			mainMenu();
+		}
+		
+		//int transferIdChoice = console.getTransferIdChoice();
+		
+		List<Transfer> transfers = new ArrayList<Transfer>();
+		transfers.addAll(transferDAO.getListOfTransfersByAccountId(currentUser.getUser().getId()));
+			
+		System.out.println();
+		System.out.println("-----------------------------------------------------");
+		System.out.println("Transfer Details");
+		System.out.println("-----------------------------------------------------");		
+		
+		
+		
+		for (Transfer transfer : transfers) {
+			System.out.println("Id: " + transfer.getTransferId());
+			if (transfer.getTransferTypeId() == 1) {
+				System.out.println("From: " + accountIdToUsernameConversion(transfer.getAccountTo()));
+				System.out.println("To: " + currentUser.getUser().getUsername());
+			}
+			System.out.println("From: " + currentUser.getUser().getUsername());
+			System.out.println("To: " + accountIdToUsernameConversion(transfer.getAccountTo()));
+			System.out.println("Type: " + transferTypeToWordsConversion(transfer.getTransferTypeId()));
+			System.out.println("Amount: $" + String.format("%.2f", transfer.getTransferAmount()));
 		}
 
 	}
@@ -111,6 +148,17 @@ public class App {
 		}
 		if (transferTypeId == 2) {
 			return "To: ";
+		}
+		return "";
+	}
+	
+	private String transferTypeToWordsConversion(int transferTypeId) {
+
+		if (transferTypeId == 1) {
+			return "Request";
+		}
+		if (transferTypeId == 2) {
+			return "Send";
 		}
 		return "";
 	}
@@ -142,11 +190,14 @@ public class App {
 		}
 		return "";
 	}
+	
+	
 	private void viewPendingRequests() {
 		// TODO Auto-generated method stub
 
 	}
 
+	
 	private void sendBucks() {
 		System.out.println("-----------------------------------------------------");
 				
@@ -162,7 +213,7 @@ public class App {
 		}
 		
 		System.out.println();
-		System.out.println("Enter ID of user you are sending to (0 to cancel): ");
+		System.out.print("Enter ID of user you are sending to (0 to cancel): ");
 		
 		if (console.getUserIdChoice() == 0) {
 			mainMenu();
@@ -195,6 +246,7 @@ public class App {
 
 	}
 
+	
 	private void exitProgram() {
 		System.exit(0);
 	}

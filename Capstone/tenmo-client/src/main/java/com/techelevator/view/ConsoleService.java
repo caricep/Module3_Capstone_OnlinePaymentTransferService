@@ -86,4 +86,10 @@ public class ConsoleService {
 		double amountChoice = Double.parseDouble(amountChoiceString);
 		return amountChoice;
 	}
+	
+	public int getTransferIdChoice() {
+		String transferIdChoiceString = in.nextLine();
+		int transferIdChoice = Integer.parseInt(transferIdChoiceString);
+		return transferIdChoice;
+	}
 }
