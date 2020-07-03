@@ -152,11 +152,11 @@ public class App {
 			System.out.println("Id: " + transfer.getTransferId());
 			
 			if (transfer.getTransferTypeId() == 1) {
-				System.out.println("From: " + accountIdToUsernameConversion(transfer.getAccountTo()));
+				System.out.println("From: " + accountIdToUsernameConversion(transfer.getAccountFrom()));
 				System.out.println("To: " + currentUser.getUser().getUsername());
 			}
 			
-			System.out.println("From: " + currentUser.getUser().getUsername());
+			System.out.println("From: " + accountIdToUsernameConversion(transfer.getAccountFrom()));
 			System.out.println("To: " + accountIdToUsernameConversion(transfer.getAccountTo()));
 			System.out.println("Type: " + transferTypeToWordsConversion(transfer.getTransferTypeId()));
 			System.out.println("Status: " + transferStatusConversion(transfer.getTransferStatusId()));
