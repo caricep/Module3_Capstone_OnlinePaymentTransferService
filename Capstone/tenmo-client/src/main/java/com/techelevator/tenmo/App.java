@@ -221,7 +221,10 @@ public class App {
 		if (console.getUserIdChoice() == 0) {
 			mainMenu();
 		}
+		createTransfer();
+	}
 
+	private void createTransfer() {
 		Transfer transfer = new Transfer();
 
 		int userIdRecipient = console.getUserIdChoice();
