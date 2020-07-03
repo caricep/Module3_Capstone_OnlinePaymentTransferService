@@ -55,37 +55,11 @@ public class JDBCTransferDAO implements TransferDAO {
 		transfer.setTransferId(rows.getInt("transfer_id"));
 		transfer.setTransferTypeId(rows.getInt("transfer_type_id"));
 		transfer.setTransferStatusId(rows.getInt("transfer_status_id"));
-		transfer.setUserIdRecipient(rows.getInt("account_to"));
 		transfer.setAccountFrom(rows.getInt("account_from"));
 		transfer.setAccountTo(rows.getInt("account_to"));
 		transfer.setTransferAmount(rows.getDouble("amount"));
 
 		return transfer;
-	}
-
-	private String transferTypeConversion(int transferTypeId) {
-
-		if (transferTypeId == 1) {
-			return "Request";
-		}
-		if (transferTypeId == 2) {
-			return "Send";
-		}
-		return "";
-	}
-
-	private String transferStatusConversion(int transferStatusId) {
-
-		if (transferStatusId == 1) {
-			return "Pending";
-		}
-		if (transferStatusId == 2) {
-			return "Approved";
-		}
-		if (transferStatusId == 3) {
-			return "Rejected";
-		}
-		return "";
 	}
 
 }

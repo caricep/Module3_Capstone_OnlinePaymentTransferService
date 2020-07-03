@@ -95,7 +95,7 @@ public class App {
 		transfers.addAll(transferDAO.getListOfTransfersByAccountId(currentUser.getUser().getId()));
 		
 		System.out.println("Transfers");
-		System.out.println(String.format("%-10s%-3s%-10s%s", "ID", "From/To", "", "Amount"));
+		System.out.println(String.format("%-10s%-14s%s", "ID", "From/To", "Amount"));
 		System.out.println("-----------------------------------------------------");
 
 		for (Transfer transfer : transfers) {
@@ -115,25 +115,18 @@ public class App {
 		return "";
 	}
 	
-	private String accountIdToUsernameConversion(int accountId) {
-		
-		List<Transfer> transfers = new ArrayList<Transfer>();
-		transfers.addAll(transferDAO.getListOfTransfersByAccountId(accountId));
-		
-		for (Transfer transfer : transfers) {
-			List<Account> accounts = new ArrayList<Account>();
-			accounts.addAll(accountDAO.getListOfUserAccounts());
-			for (Account account : accounts) {
-				if (transfer.getAccountTo() == transfer.getUserIdRecipient());
-				String userName = account.getUserName();
-			
-				return userName;
-			} 
-			
+	private String accountIdToUsernameConversion(int userId) {
+
+		if (userId == 1) {
+			return "user";
 		}
-		return null;
-		
-		
+		if (userId == 2) {
+			return "admin";
+		}
+		if (userId == 3) {
+			return "test1";
+		}
+		return "";
 	}
 
 	private String transferStatusConversion(int transferStatusId) {
