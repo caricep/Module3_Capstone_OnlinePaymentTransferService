@@ -41,7 +41,6 @@ public class App {
 	private AccountDAO accountDAO;
 	private TransferDAO transferDAO;
 
-
 	public static void main(String[] args) {
 		App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL));
 		app.run();
@@ -90,52 +89,60 @@ public class App {
 				+ String.format("%.2f", accountDAO.getAccountBalanceByUserId(currentUser.getUser().getId())));
 	}
 
-	
 	private void viewTransferHistory() {
 		List<Transfer> transfers = new ArrayList<Transfer>();
 		transfers.addAll(transferDAO.getListOfTransfersByAccountId(currentUser.getUser().getId()));
-		
+
 		System.out.println("-----------------------------------------------------");
 		System.out.println("Transfers");
 		System.out.println(String.format("%-10s%-14s%s", "ID", "From/To", "Amount"));
 		System.out.println("-----------------------------------------------------");
 
 		for (Transfer transfer : transfers) {
-			System.out.printf("%-10s%-3s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), accountIdToUsernameConversion(transfer.getAccountTo()), "$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
+			System.out.printf("%-10s%-3s%-10s%s", transfer.getTransferId(),
+					transferTypeConversion(transfer.getTransferTypeId()),
+					accountIdToUsernameConversion(transfer.getAccountTo()),
+					"$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
 		}
-		
+
 		System.out.println();
 		System.out.print("Please enter transfer ID to view details (0 to cancel): ");
-		
-		if (console.getTransferIdChoice() == 0) {
+
+		int transferIdChoice = console.getTransferIdChoice();
+		if (transferIdChoice == 0) {
 			mainMenu();
+		} else if (transferIdChoice != 0) {			
+			viewTransferHistoryDetails(transferIdChoice);
 		}
-		
-		viewTransferHistoryDetails();
 	}
-	
-	
-	private void viewTransferHistoryDetails() {
+
+	private void viewTransferHistoryDetails(int transferId) {
 		List<Transfer> transfers = new ArrayList<Transfer>();
 		transfers.addAll(transferDAO.getListOfTransfersByAccountId(currentUser.getUser().getId()));
-			
+
 		System.out.println();
 		System.out.println("-----------------------------------------------------");
 		System.out.println("Transfer Details");
-		System.out.println("-----------------------------------------------------");		
-			
+		System.out.println("-----------------------------------------------------");
+
 		for (Transfer transfer : transfers) {
+			
+			if (transfer.getTransferId() == transferId) {
 			System.out.println("Id: " + transfer.getTransferId());
+			
 			if (transfer.getTransferTypeId() == 1) {
 				System.out.println("From: " + accountIdToUsernameConversion(transfer.getAccountTo()));
 				System.out.println("To: " + currentUser.getUser().getUsername());
 			}
+			
 			System.out.println("From: " + currentUser.getUser().getUsername());
 			System.out.println("To: " + accountIdToUsernameConversion(transfer.getAccountTo()));
 			System.out.println("Type: " + transferTypeToWordsConversion(transfer.getTransferTypeId()));
 			System.out.println("Status: " + transferStatusConversion(transfer.getTransferStatusId()));
 			System.out.println("Amount: $" + String.format("%.2f", transfer.getTransferAmount()));
 			System.out.println();
+			
+			}
 		}
 	}
 
@@ -149,7 +156,7 @@ public class App {
 		}
 		return "";
 	}
-	
+
 	private String transferTypeToWordsConversion(int transferTypeId) {
 
 		if (transferTypeId == 1) {
@@ -160,7 +167,7 @@ public class App {
 		}
 		return "";
 	}
-	
+
 	private String accountIdToUsernameConversion(int userId) {
 
 		if (userId == 1) {
@@ -188,20 +195,18 @@ public class App {
 		}
 		return "";
 	}
-	
-	
+
 	private void viewPendingRequests() {
 		// TODO Auto-generated method stub
 
 	}
 
-	
 	private void sendBucks() {
 		System.out.println("-----------------------------------------------------");
-				
+
 		List<Account> accounts = new ArrayList<Account>();
 		accounts.addAll(accountDAO.getListOfUserAccounts());
-		
+
 		System.out.println("Users");
 		System.out.println("ID" + "         " + "UserName");
 		System.out.println("-----------------------------------------------------");
@@ -209,34 +214,34 @@ public class App {
 		for (Account account : accounts) {
 			System.out.println(account.getUserId() + "          " + account.getUserName());
 		}
-		
+
 		System.out.println();
 		System.out.print("Enter ID of user you are sending to (0 to cancel): ");
-		
+
 		if (console.getUserIdChoice() == 0) {
 			mainMenu();
 		}
-		
+
 		Transfer transfer = new Transfer();
-		
+
 		int userIdRecipient = console.getUserIdChoice();
 		transfer.setUserIdRecipient(userIdRecipient);
 		int userIdSender = currentUser.getUser().getId();
 		transfer.setUserIdSender(userIdSender);
-		
+
 		int accountFrom = accountDAO.getAccountIdByUserId(userIdSender);
 		transfer.setAccountFrom(accountFrom);
 		int accountTo = accountDAO.getAccountIdByUserId(userIdRecipient);
 		transfer.setAccountTo(accountTo);
-		
+
 		System.out.println("Enter amount: ");
 		double transferAmount = console.getAmountChoice();
 		transfer.setTransferAmount(transferAmount);
-		
+
 		Transfer newTransfer = transferDAO.createTransfer(transfer);
-		System.out.println(newTransfer.getTransferId() +""  + newTransfer.getUserIdRecipient());
+		System.out.println(newTransfer.getTransferId() + "" + newTransfer.getUserIdRecipient());
 		System.out.println();
-		
+
 	}
 
 	private void requestBucks() {
@@ -244,7 +249,6 @@ public class App {
 
 	}
 
-	
 	private void exitProgram() {
 		System.exit(0);
 	}
