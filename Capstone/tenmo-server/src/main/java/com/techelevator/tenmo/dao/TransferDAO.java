@@ -7,5 +7,5 @@ import com.techelevator.tenmo.model.Transfer;
 public interface TransferDAO {
 
 	public Transfer createTransfer(Transfer transfer);
-	public List<Transfer> getListOfTransfers();
+	public List<Transfer> getListOfTransfersByAccountId(int accountId);
 }

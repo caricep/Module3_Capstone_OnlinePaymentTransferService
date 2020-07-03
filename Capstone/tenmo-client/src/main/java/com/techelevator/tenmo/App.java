@@ -92,14 +92,14 @@ public class App {
 
 	private void viewTransferHistory() {
 		List<Transfer> transfers = new ArrayList<Transfer>();
-		transfers.addAll(transferDAO.getListOfTransfers());
+		transfers.addAll(transferDAO.getListOfTransfersByAccountId(currentUser.getUser().getId()));
 		
 		System.out.println("Transfers");
 		System.out.println(String.format("%-10s%-10s%s", "ID", "From/To", "Amount"));
 		System.out.println("-----------------------------------------------------");
 
 		for (Transfer transfer : transfers) {
-			System.out.printf("%-10s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), "$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
+			System.out.printf("%-10s%-3s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), transfer.getAccountTo(), "$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
 		}
 
 	}
@@ -167,7 +167,7 @@ public class App {
 		transfer.setTransferAmount(transferAmount);
 		
 		Transfer newTransfer = transferDAO.createTransfer(transfer);
-		System.out.println(newTransfer.getTransferId() + newTransfer.getUserIdRecipient());
+		System.out.println(newTransfer.getTransferId() +""  + newTransfer.getUserIdRecipient());
 		System.out.println();
 		
 	}

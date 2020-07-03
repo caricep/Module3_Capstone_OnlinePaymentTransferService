@@ -37,12 +37,12 @@ public class ApiTransferService implements TransferDAO {
 		
 
 	@Override
-	public List<Transfer> getListOfTransfers() {
+	public List<Transfer> getListOfTransfersByAccountId(int accountId) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth(authToken);
 		HttpEntity entity = new HttpEntity<>(headers);
 		
-		Transfer[] transfersArray = restTemplate.exchange(baseUrl + "/transfers", HttpMethod.GET, entity, Transfer[].class).getBody();
+		Transfer[] transfersArray = restTemplate.exchange(baseUrl + "accounts/" + accountId + "/transfers", HttpMethod.GET, entity, Transfer[].class).getBody();
 		List<Transfer> listOfTransfers = Arrays.asList(transfersArray);
 		return listOfTransfers;
 	}

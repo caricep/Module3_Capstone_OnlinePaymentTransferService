@@ -20,11 +20,13 @@ public class JDBCTransferDAO implements TransferDAO {
 	}
 
 	@Override
-	public List<Transfer> getListOfTransfers() {
+	public List<Transfer> getListOfTransfersByAccountId(int accountId) {
 		List<Transfer> listOfTransfers = new ArrayList<Transfer>();
 
-		String selectSql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, CAST(amount as decimal) FROM transfers";
-		SqlRowSet rows = jdbcTemplate.queryForRowSet(selectSql);
+		String selectSql = "SELECT transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount "
+				+ "FROM transfers JOIN accounts ON transfers.account_from = accounts.account_id "
+				+ "JOIN users ON accounts.user_id = users.user_id WHERE accounts.account_id = ? ORDER BY transfer_id";
+		SqlRowSet rows = jdbcTemplate.queryForRowSet(selectSql, accountId);
 
 		while (rows.next()) {
 			Transfer transfer = makeTransferFromRow(rows);
