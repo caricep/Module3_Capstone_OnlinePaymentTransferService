@@ -99,11 +99,32 @@ public class App {
 		System.out.println("-----------------------------------------------------");
 
 		for (Transfer transfer : transfers) {
-			System.out.printf("%-10s%-3s%-10s%s", transfer.getTransferId(),
-					transferTypeConversion(transfer.getTransferTypeId()),
-					accountIdToUsernameConversion(transfer.getAccountTo()),
-					"$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
+			if (transfer.getAccountFrom() != transfer.getAccountTo() && transfer.getAccountTo() == currentUser.getUser().getId()) {
+				int transferTypeId = 1;
+				transfer.setTransferTypeId(transferTypeId);
+				
+				String userSender = accountIdToUsernameConversion(transfer.getAccountFrom());
+				
+				int accountFromDifferentSender = transfer.getAccountFrom();
+				transfer.setAccountFrom(accountFromDifferentSender);
+
+				System.out.printf("%-10s%-5s%-10s%s", transfer.getTransferId(),
+						transferTypeConversion(transfer.getTransferTypeId()), userSender,
+						"$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
+			}
+			if (transfer.getAccountFrom() != transfer.getAccountTo()
+					&& transfer.getAccountTo() != currentUser.getUser().getId()) {
+				int transferTypeId = 2;
+				transfer.setTransferTypeId(transferTypeId);
+
+				String userReceiver = accountIdToUsernameConversion(transfer.getAccountTo());
+
+				System.out.printf("%-10s%-5s%-10s%s", transfer.getTransferId(),
+						transferTypeConversion(transfer.getTransferTypeId()), userReceiver,
+						"$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
+			}
 		}
+			
 
 		System.out.println();
 		System.out.print("Please enter transfer ID to view details (0 to cancel): ");
