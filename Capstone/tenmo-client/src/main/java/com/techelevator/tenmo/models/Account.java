@@ -6,6 +6,8 @@ public class Account {
 	private int userId;
 	private String userName;
 	private double accountBalance;
+	private double withdrawalAmount;
+	private double depositAmount;
 	
 	public int getAccountId() {
 		return accountId;
@@ -31,7 +33,6 @@ public class Account {
 		this.accountBalance = accountBalance;
 	}
 
-	
 	public String getUserName() {
 		return userName;
 	}
@@ -40,11 +41,29 @@ public class Account {
 		this.userName = userName;
 	}
 
+	public double getWithdrawalAmount() {
+		return withdrawalAmount;
+	}
+
+	public void setWithdrawalAmount(double withdrawalAmount) {
+		this.withdrawalAmount = withdrawalAmount;
+	}
+
+	public double getDepositAmount() {
+		return depositAmount;
+	}
+
+	public void setDepositAmount(double depositAmount) {
+		this.depositAmount = depositAmount;
+	}
+
 	@Override
 	public String toString() {
 		return "Account [accountId=" + accountId + ", userId=" + userId + ", userName=" + userName + ", accountBalance="
-				+ accountBalance + "]";
+				+ accountBalance + ", withdrawalAmount=" + withdrawalAmount + ", depositAmount=" + depositAmount + "]";
 	}
+
+	
 
 	
 

@@ -52,6 +52,13 @@ public class ApiAccountService implements AccountDAO {
 		return listOfUserAccounts;
 	}
 
+
+	@Override
+	public Account withdrawMoneyForTransfer(int accountFrom, double amountToWithdraw) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 

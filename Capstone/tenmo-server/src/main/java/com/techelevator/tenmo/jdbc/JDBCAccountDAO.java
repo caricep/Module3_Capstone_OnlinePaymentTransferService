@@ -45,6 +45,14 @@ public class JDBCAccountDAO implements AccountDAO {
 		return listOfUserAccounts;
 	}
 	
+	@Override
+	public Account withdrawMoneyForTransfer(Account account) {
+		String updateSql = "UPDATE accounts SET balance = balance - ? WHERE account_id = ?";
+		jdbcTemplate.update(updateSql, account.getWithdrawalAmount(), account.getAccountId());
+		
+		return account;
+	}
+	
 	private Account makeAccountFromRow(SqlRowSet rows) {
 		Account account = new Account();
 		
@@ -55,5 +63,7 @@ public class JDBCAccountDAO implements AccountDAO {
 		
 		return account;
 	}
+
+	
 
 }

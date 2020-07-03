@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,11 @@ public class AccountController {
 		return accountDAO.getListOfUserAccounts();	
 	}
 	
+	@PreAuthorize("permitAll")
+	@RequestMapping(path = "/accounts/{id}", method = RequestMethod.PUT)
+	public Account withdrawMoneyForTransfer(@RequestBody Account account, @PathVariable("id") int accountId) {
+		return accountDAO.withdrawMoneyForTransfer(account, accountId);
 	
+	}
 	
 }
