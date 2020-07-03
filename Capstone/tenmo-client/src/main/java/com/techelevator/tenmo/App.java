@@ -95,11 +95,11 @@ public class App {
 		transfers.addAll(transferDAO.getListOfTransfersByAccountId(currentUser.getUser().getId()));
 		
 		System.out.println("Transfers");
-		System.out.println(String.format("%-10s%-10s%s", "ID", "From/To", "Amount"));
+		System.out.println(String.format("%-10s%-3s%-10s%s", "ID", "From/To", "", "Amount"));
 		System.out.println("-----------------------------------------------------");
 
 		for (Transfer transfer : transfers) {
-			System.out.printf("%-10s%-3s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), transfer.getAccountTo(), "$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
+			System.out.printf("%-10s%-3s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), accountIdToUsernameConversion(transfer.getAccountTo()), "$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
 		}
 
 	}
@@ -113,6 +113,27 @@ public class App {
 			return "To: ";
 		}
 		return "";
+	}
+	
+	private String accountIdToUsernameConversion(int accountId) {
+		
+		List<Transfer> transfers = new ArrayList<Transfer>();
+		transfers.addAll(transferDAO.getListOfTransfersByAccountId(accountId));
+		
+		for (Transfer transfer : transfers) {
+			List<Account> accounts = new ArrayList<Account>();
+			accounts.addAll(accountDAO.getListOfUserAccounts());
+			for (Account account : accounts) {
+				if (transfer.getAccountTo() == transfer.getUserIdRecipient());
+				String userName = account.getUserName();
+			
+				return userName;
+			} 
+			
+		}
+		return null;
+		
+		
 	}
 
 	private String transferStatusConversion(int transferStatusId) {
@@ -149,6 +170,10 @@ public class App {
 		
 		System.out.println();
 		System.out.println("Enter ID of user you are sending to (0 to cancel): ");
+		
+		if (console.getUserIdChoice() == 0) {
+			mainMenu();
+		}
 		
 		Transfer transfer = new Transfer();
 		
