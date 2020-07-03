@@ -166,7 +166,8 @@ public class App {
 		double transferAmount = console.getAmountChoice();
 		transfer.setTransferAmount(transferAmount);
 		
-		transferDAO.createTransfer(transfer);
+		Transfer newTransfer = transferDAO.createTransfer(transfer);
+		System.out.println(newTransfer.getTransferId() + newTransfer.getUserIdRecipient());
 		System.out.println();
 		
 	}

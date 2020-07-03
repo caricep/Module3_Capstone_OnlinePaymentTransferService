@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 import com.techelevator.tenmo.dao.TransferDAO;
@@ -27,8 +28,9 @@ public class ApiTransferService implements TransferDAO {
 	@Override
 	public Transfer createTransfer(Transfer transfer) {
 		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setBearerAuth(authToken);
-		HttpEntity entity = new HttpEntity<>(headers);
+		HttpEntity<Transfer> entity = new HttpEntity<Transfer>(transfer, headers);
 		
 		return restTemplate.exchange(baseUrl + "/transfers", HttpMethod.POST, entity, Transfer.class).getBody();
 	}

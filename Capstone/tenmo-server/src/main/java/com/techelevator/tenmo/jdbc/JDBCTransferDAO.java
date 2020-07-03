@@ -36,7 +36,7 @@ public class JDBCTransferDAO implements TransferDAO {
 
 	@Override
 	public Transfer createTransfer(Transfer transfer) {
-		String insertTransferSql = "INSERT INTO transfers (transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, CAST(amount as decimal) "
+		String insertTransferSql = "INSERT INTO transfers (transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount) "
 				+ "VALUES (DEFAULT, 2, 2, ?, ?, ?) RETURNING transfer_id";
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(insertTransferSql, transfer.getAccountFrom(), transfer.getAccountTo(), transfer.getTransferAmount());
 
