@@ -218,16 +218,19 @@ public class App {
 		System.out.println();
 		System.out.print("Enter ID of user you are sending to (0 to cancel): ");
 
-		if (console.getUserIdChoice() == 0) {
+		int userIdChoice = console.getUserIdChoice();
+		if (userIdChoice == 0) {
 			mainMenu();
+		} else if (userIdChoice != 0) {			
+			createTransfer(userIdChoice);
 		}
-		createTransfer();
+		
 	}
 
-	private void createTransfer() {
+	private void createTransfer(int userIdChoice) {
 		Transfer transfer = new Transfer();
 
-		int userIdRecipient = console.getUserIdChoice();
+		int userIdRecipient = userIdChoice;
 		transfer.setUserIdRecipient(userIdRecipient);
 		int userIdSender = currentUser.getUser().getId();
 		transfer.setUserIdSender(userIdSender);
@@ -237,13 +240,32 @@ public class App {
 		int accountTo = accountDAO.getAccountIdByUserId(userIdRecipient);
 		transfer.setAccountTo(accountTo);
 
-		System.out.println("Enter amount: ");
+		System.out.print("Enter amount: ");
 		double transferAmount = console.getAmountChoice();
 		transfer.setTransferAmount(transferAmount);
 
-		Transfer newTransfer = transferDAO.createTransfer(transfer);
-		System.out.println(newTransfer.getTransferId() + "" + newTransfer.getUserIdRecipient());
+		transferDAO.createTransfer(transfer);
 		System.out.println();
+		
+		
+		Account withdrawFromAccount = new Account();
+		
+		double withdrawalAmount = transferAmount;
+		withdrawFromAccount.setWithdrawalAmount(withdrawalAmount);
+		int accountToWithdrawFrom = accountFrom;
+		withdrawFromAccount.setAccountId(accountToWithdrawFrom);
+		
+		accountDAO.withdrawMoneyForTransfer(withdrawFromAccount);
+		
+		
+		Account deposiToAccount = new Account();
+		
+		double depositAmount = transferAmount;
+		deposiToAccount.setDepositAmount(depositAmount);
+		int accountToDepositTo = accountTo;
+		deposiToAccount.setAccountId(accountToDepositTo);
+		
+		accountDAO.depositMoneyForTransfer(deposiToAccount);
 
 	}
 

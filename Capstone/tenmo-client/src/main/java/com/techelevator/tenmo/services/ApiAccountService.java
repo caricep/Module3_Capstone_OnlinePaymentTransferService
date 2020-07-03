@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 import com.techelevator.tenmo.dao.AccountDAO;
 import com.techelevator.tenmo.models.Account;
+import com.techelevator.tenmo.models.Transfer;
 
 public class ApiAccountService implements AccountDAO {
 
@@ -54,9 +56,24 @@ public class ApiAccountService implements AccountDAO {
 
 
 	@Override
-	public Account withdrawMoneyForTransfer(int accountFrom, double amountToWithdraw) {
-		// TODO Auto-generated method stub
-		return null;
+	public Account withdrawMoneyForTransfer(Account account) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setBearerAuth(authToken);
+		HttpEntity<Account> entity = new HttpEntity<Account>(account, headers);
+		
+		return restTemplate.exchange(baseUrl + "/accounts", HttpMethod.PUT, entity, Account.class).getBody();
+	}
+
+
+	@Override
+	public Account depositMoneyForTransfer(Account account) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setBearerAuth(authToken);
+		HttpEntity<Account> entity = new HttpEntity<Account>(account, headers);
+		
+		return restTemplate.exchange(baseUrl + "/accounts", HttpMethod.PUT, entity, Account.class).getBody();
 	}
 
 	

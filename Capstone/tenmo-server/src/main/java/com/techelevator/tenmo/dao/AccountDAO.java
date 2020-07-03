@@ -10,5 +10,6 @@ public interface AccountDAO {
 	public int getAccountIdByUserId(Long userId);
 	public List<Account> getListOfUserAccounts();
 	public Account withdrawMoneyForTransfer(Account account);
+	public Account depositMoneyForTransfer(Account account);
 	
 }

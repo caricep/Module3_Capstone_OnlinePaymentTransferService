@@ -35,7 +35,7 @@ public class JDBCAccountDAO implements AccountDAO {
 	public List<Account> getListOfUserAccounts() {
 		List<Account> listOfUserAccounts = new ArrayList<Account>();
 		
-		String selectSql = "SELECT account_id, accounts.user_id, users.username, balance FROM accounts JOIN users ON accounts.user_id = users.user_id";
+		String selectSql = "SELECT account_id, accounts.user_id, users.username, balance FROM accounts JOIN users ON accounts.user_id = users.user_id ORDER BY user_id";
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(selectSql);
 		
 		while (rows.next()) {
@@ -53,6 +53,14 @@ public class JDBCAccountDAO implements AccountDAO {
 		return account;
 	}
 	
+	@Override
+	public Account depositMoneyForTransfer(Account account) {
+		String updateSql = "UPDATE accounts SET balance = balance + ? WHERE account_id = ?";
+		jdbcTemplate.update(updateSql, account.getDepositAmount(), account.getAccountId());
+		
+		return account;
+	}
+	
 	private Account makeAccountFromRow(SqlRowSet rows) {
 		Account account = new Account();
 		
@@ -63,6 +71,8 @@ public class JDBCAccountDAO implements AccountDAO {
 		
 		return account;
 	}
+
+	
 
 	
 
