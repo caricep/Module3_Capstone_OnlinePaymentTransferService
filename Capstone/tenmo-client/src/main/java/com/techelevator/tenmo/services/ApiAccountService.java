@@ -67,13 +67,13 @@ public class ApiAccountService implements AccountDAO {
 
 
 	@Override
-	public Account depositMoneyForTransfer(Account account) {
+	public Account depositMoneyForTransfer(Account account, int accountToId) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setBearerAuth(authToken);
 		HttpEntity<Account> entity = new HttpEntity<Account>(account, headers);
 		
-		return restTemplate.exchange(baseUrl + "/accounts", HttpMethod.PUT, entity, Account.class).getBody();
+		return restTemplate.exchange(baseUrl + "/accounts/" + accountToId, HttpMethod.PUT, entity, Account.class).getBody();
 	}
 
 	

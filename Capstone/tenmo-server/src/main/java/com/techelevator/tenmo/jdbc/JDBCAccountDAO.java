@@ -54,7 +54,7 @@ public class JDBCAccountDAO implements AccountDAO {
 	}
 	
 	@Override
-	public Account depositMoneyForTransfer(Account account) {
+	public Account depositMoneyForTransfer(Account account, int accountToId) {
 		String updateSql = "UPDATE accounts SET balance = balance + ? WHERE account_id = ?";
 		jdbcTemplate.update(updateSql, account.getDepositAmount(), account.getAccountId());
 		
@@ -71,6 +71,8 @@ public class JDBCAccountDAO implements AccountDAO {
 		
 		return account;
 	}
+
+	
 
 	
 

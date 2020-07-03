@@ -46,9 +46,9 @@ public class AccountController {
 	}
 	
 	@PreAuthorize("permitAll")
-	@RequestMapping(path = "/accounts", method = RequestMethod.PUT)
-	public Account depositMoneyForTransfer(@RequestBody Account account) {
-		return accountDAO.depositMoneyForTransfer(account);
+	@RequestMapping(path = "/accounts/{id}", method = RequestMethod.PUT)
+	public Account depositMoneyForTransfer(@RequestBody Account account, @PathVariable("id") int accountToId) {
+		return accountDAO.depositMoneyForTransfer(account, accountToId);
 	}
 	
 }

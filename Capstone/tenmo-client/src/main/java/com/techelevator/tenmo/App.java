@@ -265,7 +265,7 @@ public class App {
 		int accountToDepositTo = accountTo;
 		deposiToAccount.setAccountId(accountToDepositTo);
 		
-		accountDAO.depositMoneyForTransfer(deposiToAccount);
+		accountDAO.depositMoneyForTransfer(deposiToAccount, accountToDepositTo);
 
 	}
 
