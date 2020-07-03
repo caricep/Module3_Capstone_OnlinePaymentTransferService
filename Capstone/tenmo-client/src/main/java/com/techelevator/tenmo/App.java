@@ -103,11 +103,7 @@ public class App {
 		for (Transfer transfer : transfers) {
 			System.out.printf("%-10s%-3s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), accountIdToUsernameConversion(transfer.getAccountTo()), "$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
 		}
-		viewTransferHistoryDetails();
-	}
-	
-	
-	private void viewTransferHistoryDetails() {
+		
 		System.out.println();
 		System.out.print("Please enter transfer ID to view details (0 to cancel): ");
 		
@@ -115,8 +111,11 @@ public class App {
 			mainMenu();
 		}
 		
-		//int transferIdChoice = console.getTransferIdChoice();
-		
+		viewTransferHistoryDetails();
+	}
+	
+	
+	private void viewTransferHistoryDetails() {
 		List<Transfer> transfers = new ArrayList<Transfer>();
 		transfers.addAll(transferDAO.getListOfTransfersByAccountId(currentUser.getUser().getId()));
 			
@@ -124,9 +123,7 @@ public class App {
 		System.out.println("-----------------------------------------------------");
 		System.out.println("Transfer Details");
 		System.out.println("-----------------------------------------------------");		
-		
-		
-		
+			
 		for (Transfer transfer : transfers) {
 			System.out.println("Id: " + transfer.getTransferId());
 			if (transfer.getTransferTypeId() == 1) {
@@ -136,9 +133,10 @@ public class App {
 			System.out.println("From: " + currentUser.getUser().getUsername());
 			System.out.println("To: " + accountIdToUsernameConversion(transfer.getAccountTo()));
 			System.out.println("Type: " + transferTypeToWordsConversion(transfer.getTransferTypeId()));
+			System.out.println("Status: " + transferStatusConversion(transfer.getTransferStatusId()));
 			System.out.println("Amount: $" + String.format("%.2f", transfer.getTransferAmount()));
+			System.out.println();
 		}
-
 	}
 
 	private String transferTypeConversion(int transferTypeId) {
