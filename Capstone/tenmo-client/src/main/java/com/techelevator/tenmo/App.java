@@ -107,10 +107,10 @@ public class App {
 	private String transferTypeConversion(int transferTypeId) {
 
 		if (transferTypeId == 1) {
-			return "From";
+			return "From: ";
 		}
 		if (transferTypeId == 2) {
-			return "To";
+			return "To: ";
 		}
 		return "";
 	}
