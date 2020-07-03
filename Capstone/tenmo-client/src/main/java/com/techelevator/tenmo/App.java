@@ -95,7 +95,7 @@ public class App {
 
 		System.out.println("-----------------------------------------------------");
 		System.out.println("Transfers");
-		System.out.println(String.format("%-10s%-14s%s", "ID", "From/To", "Amount"));
+		System.out.println(String.format("%-10s%-16s%s", "ID", "From/To", "Amount"));
 		System.out.println("-----------------------------------------------------");
 
 		for (Transfer transfer : transfers) {
@@ -109,7 +109,7 @@ public class App {
 				int accountFromDifferentSender = transfer.getAccountFrom();
 				transfer.setAccountFrom(accountFromDifferentSender);
 
-				System.out.printf("%-10s%-5s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), 
+				System.out.printf("%-10s%-6s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), 
 						userSender, "$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
 			}
 			
@@ -120,7 +120,7 @@ public class App {
 
 				String userReceiver = accountIdToUsernameConversion(transfer.getAccountTo());
 
-				System.out.printf("%-10s%-5s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), 
+				System.out.printf("%-10s%-6s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), 
 						userReceiver, "$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
 			}
 		}
