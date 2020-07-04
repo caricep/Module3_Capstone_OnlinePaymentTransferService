@@ -49,8 +49,7 @@ public class App {
 	public App(ConsoleService console, AuthenticationService authenticationService) {
 		this.console = console;
 		this.authenticationService = authenticationService;
-		accountDAO = new ApiAccountService(API_BASE_URL);
-		transferDAO = new ApiTransferService(API_BASE_URL);
+		
 	}
 
 	public void run() {
@@ -59,6 +58,8 @@ public class App {
 		System.out.println("*********************");
 
 		registerAndLogin();
+		accountDAO = new ApiAccountService(API_BASE_URL, currentUser.getToken());
+		transferDAO = new ApiTransferService(API_BASE_URL, currentUser.getToken());
 		mainMenu();
 	}
 

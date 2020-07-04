@@ -15,11 +15,12 @@ import com.techelevator.tenmo.models.Transfer;
 
 public class ApiTransferService implements TransferDAO {
 	
-	private static String authToken = "";
+	private String authToken = "";
 	private String baseUrl;
 	private RestTemplate restTemplate;
 	
-	public ApiTransferService(String baseUrl) {
+	public ApiTransferService(String baseUrl, String authToken) {
+		this.authToken = authToken;
 		this.baseUrl = baseUrl;
 		restTemplate = new RestTemplate();
 	}

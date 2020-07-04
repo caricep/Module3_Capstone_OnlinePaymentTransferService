@@ -21,25 +21,21 @@ public class AccountController {
 	private AccountDAO accountDAO;
 	
 	
-	@PreAuthorize("permitAll")
 	@RequestMapping(path = "/users/{id}/accounts", method = RequestMethod.GET)
 	public double getAccountBalance(@PathVariable("id") Long userId){
 		return accountDAO.getAccountBalanceByUserId(userId);
 	}
 	
-	@PreAuthorize("permitAll")
 	@RequestMapping(path = "/accounts/{id}", method = RequestMethod.GET)
 	public int getAccountId(@PathVariable("id") Long userId){
 		return accountDAO.getAccountIdByUserId(userId);
 	}
 	
-	@PreAuthorize("permitAll")
 	@RequestMapping(path = "/accounts", method = RequestMethod.GET)
 	public List<Account> listOfUserAccounts() {
 		return accountDAO.getListOfUserAccounts();	
 	}
 	
-	@PreAuthorize("permitAll")
 	@RequestMapping(path = "/accounts", method = RequestMethod.PUT)
 	public Account withdrawMoneyForTransfer(@RequestBody Account account) {
 		return accountDAO.withdrawMoneyForTransfer(account);

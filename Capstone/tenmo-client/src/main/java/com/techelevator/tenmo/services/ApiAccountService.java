@@ -15,12 +15,13 @@ import com.techelevator.tenmo.models.Transfer;
 
 public class ApiAccountService implements AccountDAO {
 
-	private static String authToken = "";
+	private String authToken = "";
 	private String baseUrl;
 	private RestTemplate restTemplate;
 	
-	public ApiAccountService(String baseUrl) {
+	public ApiAccountService(String baseUrl, String authToken) {
 		this.baseUrl = baseUrl;
+		this.authToken = authToken;
 		restTemplate = new RestTemplate();
 	}
 	
