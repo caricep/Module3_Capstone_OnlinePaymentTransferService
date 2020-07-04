@@ -267,7 +267,6 @@ public class App {
 		transfer.setTransferAmount(transferAmount);
 
 		transferDAO.createTransfer(transfer);
-		System.out.println();
 		
 		
 		Account withdrawFromAccount = new Account();
@@ -288,6 +287,9 @@ public class App {
 		deposiToAccount.setAccountId(accountToDepositTo);
 		
 		accountDAO.depositMoneyForTransfer(deposiToAccount, accountToDepositTo);
+		
+		System.out.println();
+		System.out.println("Your transfer is complete. What would you like to do next?");
 
 	}
 
