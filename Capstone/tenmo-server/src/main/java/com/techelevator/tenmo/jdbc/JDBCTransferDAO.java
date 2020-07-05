@@ -23,12 +23,11 @@ public class JDBCTransferDAO implements TransferDAO {
 	public List<Transfer> getListOfTransfersByAccountId(int accountId) {
 		List<Transfer> listOfTransfers = new ArrayList<Transfer>();
 
-		String selectSql = "SELECT transfer_id, transfer_type_id, transfer_status_id, transfers.account_from, user_sender.user_id "
-				+ "AS sender_user_id, user_sender.username AS sender_username, transfers.account_to, user_recipient.user_id "
-				+ "AS recipient_user_id, user_recipient.username AS recipient_username, amount FROM transfers JOIN accounts AS sender "
-				+ "ON transfers.account_from = sender.account_id JOIN accounts AS recipient ON transfers.account_to = recipient.account_id "
-				+ "JOIN users AS user_sender ON sender.user_id = user_sender.user_id JOIN users AS user_recipient ON recipient.user_id = user_recipient.user_id "
-				+ "WHERE transfers.account_from = sender.user_id OR transfers.account_to = recipient.user_id AND transfers.account_from = ? ORDER BY transfer_id";
+		String selectSql = "SELECT transfer_id, transfer_type_id, transfer_status_id, transfers.account_from, user_sender.user_id AS sender_user_id, user_sender.username "
+				+ "AS sender_username, transfers.account_to, user_recipient.user_id AS recipient_user_id, user_recipient.username AS recipient_username, amount "
+				+ "FROM transfers JOIN accounts AS sender ON transfers.account_from = sender.account_id JOIN accounts AS recipient "
+				+ "ON transfers.account_to = recipient.account_id JOIN users AS user_sender ON sender.user_id = user_sender.user_id JOIN users AS user_recipient "
+				+ "ON recipient.user_id = user_recipient.user_id WHERE transfers.account_from = ? ORDER BY transfer_id";
 		SqlRowSet rows = jdbcTemplate.queryForRowSet(selectSql, accountId);
 
 		while (rows.next()) {
