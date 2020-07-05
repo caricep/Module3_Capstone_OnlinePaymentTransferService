@@ -105,7 +105,7 @@ public class App {
 				int transferTypeId = 1;
 				transfer.setTransferTypeId(transferTypeId);
 				
-				String userSender = accountIdToUsernameConversion(transfer.getAccountFrom());
+				String userSender = transfer.getUsernameSender();
 				
 				int accountFromDifferentSender = transfer.getAccountFrom();
 				transfer.setAccountFrom(accountFromDifferentSender);
@@ -119,7 +119,7 @@ public class App {
 				int transferTypeId = 2;
 				transfer.setTransferTypeId(transferTypeId);
 
-				String userReceiver = accountIdToUsernameConversion(transfer.getAccountTo());
+				String userReceiver = transfer.getUsernameRecipient();
 
 				System.out.printf("%-10s%-6s%-10s%s", transfer.getTransferId(), transferTypeConversion(transfer.getTransferTypeId()), 
 						userReceiver, "$" + String.format("%.2f", transfer.getTransferAmount()) + "\n");
@@ -153,12 +153,12 @@ public class App {
 			System.out.println("Id: " + transfer.getTransferId());
 			
 			if (transfer.getTransferTypeId() == 1) {
-				System.out.println("From: " + accountIdToUsernameConversion(transfer.getAccountFrom()));
+				System.out.println("From: " + transfer.getUsernameSender());
 				System.out.println("To: " + currentUser.getUser().getUsername());
 			}
 			
-			System.out.println("From: " + accountIdToUsernameConversion(transfer.getAccountFrom()));
-			System.out.println("To: " + accountIdToUsernameConversion(transfer.getAccountTo()));
+			System.out.println("From: " + transfer.getUsernameSender());
+			System.out.println("To: " + transfer.getUsernameRecipient());
 			System.out.println("Type: " + transferTypeToWordsConversion(transfer.getTransferTypeId()));
 			System.out.println("Status: " + transferStatusConversion(transfer.getTransferStatusId()));
 			System.out.println("Amount: $" + String.format("%.2f", transfer.getTransferAmount()));
@@ -190,19 +190,6 @@ public class App {
 		return "";
 	}
 
-	private String accountIdToUsernameConversion(int userId) {
-
-		if (userId == 1) {
-			return "user";
-		}
-		if (userId == 2) {
-			return "admin";
-		}
-		if (userId == 3) {
-			return "test1";
-		}
-		return "";
-	}
 
 	private String transferStatusConversion(int transferStatusId) {
 

@@ -7,6 +7,8 @@ public class Transfer {
 	private int transferStatusId;
 	private int userIdSender;
 	private int userIdRecipient;
+	private String usernameSender;
+	private String usernameRecipient;
 	private int accountFrom;
 	private int accountTo;
 	private double transferAmount;
@@ -73,6 +75,22 @@ public class Transfer {
 
 	public void setUserIdRecipient(int userIdRecipient) {
 		this.userIdRecipient = userIdRecipient;
+	}
+
+	public String getUsernameSender() {
+		return usernameSender;
+	}
+
+	public void setUsernameSender(String usernameSender) {
+		this.usernameSender = usernameSender;
+	}
+
+	public String getUsernameRecipient() {
+		return usernameRecipient;
+	}
+
+	public void setUsernameRecipient(String usernameRecipient) {
+		this.usernameRecipient = usernameRecipient;
 	}
 	
 	
